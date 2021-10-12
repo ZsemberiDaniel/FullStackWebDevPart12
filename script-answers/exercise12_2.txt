@@ -1,0 +1,10 @@
+PS C:\Coding\FullStackWebDev\FullStackWebDevPart12\script-answers> docker container run -it ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+f3ef4ff62e0d: Already exists
+Digest: sha256:a0d9e826ab87bd665cfc640598a871b748b4b70a01a4f3d174d4fb02adad07a9
+Status: Downloaded newer image for ubuntu:latest
+root@37a835fe02d5:/# mkdir /usr/src/app
+root@37a835fe02d5:/# touch /usr/src/app/index.js
+root@37a835fe02d5:/# exit
+exit

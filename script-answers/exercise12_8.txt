@@ -1,0 +1,83 @@
+PS C:\Coding\FullStackWebDev\FullStackWebDevPart12\todo-app\todo-backend> docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                     NAMES     
+cd64097b7777   mongo     "docker-entrypoint.s…"   18 minutes ago   Up 16 minutes   0.0.0.0:3456->27017/tcp   todo-backend-mongo-1
+
+
+
+PS C:\Coding\FullStackWebDev\FullStackWebDevPart12\todo-app\todo-backend> docker exec -it cd64 bash
+
+
+
+root@cd64097b7777:/# mongo -u root -p example
+MongoDB shell version v5.0.3
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("3453189f-2f6f-4edf-9d06-c03015221fa0") }
+MongoDB server version: 5.0.3
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in       
+an upcoming release.
+We recommend you begin using "mongosh".
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+        https://community.mongodb.com
+---
+The server generated these startup warnings when booting:
+        2021-10-11T12:29:48.675+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2021-10-11T12:29:49.725+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+
+
+
+
+> show dbs
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+
+
+
+> use the_database
+switched to db the_database
+
+
+
+> show collections
+todos
+
+
+
+> db.todos.find({})
+{ "_id" : ObjectId("61642dd634ce2a8bd7e89db7"), "text" : "Pear", "done" : true }
+{ "_id" : ObjectId("61642dd634ce2a8bd7e89db8"), "text" : "Learn about containers", "done" : false }
+
+
+
+> db.todos.insertOne({"text": "Increase the number of tools in my toolbelt", "done": false})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("616432e75d79939238a06fa7")
+}
+> db.todos.find({})
+{ "_id" : ObjectId("61642dd634ce2a8bd7e89db7"), "text" : "Pear", "done" : true }
+{ "_id" : ObjectId("61642dd634ce2a8bd7e89db8"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("616432e75d79939238a06fa7"), "text" : "Increase the number of tools in my toolbelt", "done" : false 
+}

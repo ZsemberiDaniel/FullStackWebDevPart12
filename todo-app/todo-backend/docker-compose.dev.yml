@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  server:
+    image: hello-back-dev
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
+    volumes:
+      - ./:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+    ports:
+      - 3000:3000
+    container_name: hello-back-dev # This will name the container hello-front-dev
+    environment: 
+      - REDIS_URL=//hello-back-dev-redis:6379
+      - MONGO_URL=mongodb://root:example@hello-back-dev-mongo:27017/the_database
+    depends_on:
+      - redis
+      - mongo
+  debug-helper:
+    image: busybox
+  mongo:
+    container_name: hello-back-dev-mongo
+    image: mongo:latest
+    ports:
+     - 27017-27019:27017-27019
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo_data:/data/db
+  redis:
+    container_name: hello-back-dev-redis
+    image: redis:alpine
+    command: redis-server
+    volumes: # Declare the volume
+      - ./redis_data:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  mongo_data:
